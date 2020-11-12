@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserProfile.Model;
+using UserProfile.API.Models;
 
-namespace UserProfile.Repository
+namespace UserProfile.API.Repository
 {
-    interface IUserRepository
+    public interface IUserProfileRepository
     {
         IEnumerable<User> GetAllUsers();
         User GetUserByID(int UserId);
         void AddUser(User user);
         void DeleteUser(int UserId);
-        void UpdateUser(int UserId);
+        void UpdateUser(User user);
         void Save();
     }
 }

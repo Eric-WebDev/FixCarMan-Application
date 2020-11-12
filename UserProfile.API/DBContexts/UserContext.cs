@@ -1,23 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using UserProfile.Model;
+using UserProfile.API.Models;
 
-namespace UserProfile.DBContexts
+namespace UserProfile.API.DBContexts
 {
-    public class UserContext : DbContext
+    public class UserContext:DbContext
     {
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {
         }
-        public DbSet<User> Users { get; set; }
 
+        public DbSet<User> UsersProfiles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Guid g = Guid.NewGuid();
             modelBuilder.Entity<User>().HasData(
                     new User
                     {
+                        Id = 1,
                         FirstName = "John",
                         LastName = "Smyth",
                         CompanyName = "GarageFix",
@@ -34,5 +33,5 @@ namespace UserProfile.DBContexts
                     }
                 );
         }
-    }
+        }
 }
