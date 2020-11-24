@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace VehicleProfile.API.Models
+namespace Vehicle.Data.Models
 {
     public class VehicleService
     {
-        public int ServiceId { get; set; }
+        public int Id { get; set; }
         public string ServiceDetails { get; set; }
         public ServicesTypes ServiceType { get; set; }
         public string InvoiceURL { get; set; }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace VehicleProfile.API.Models
+namespace Vehicle.Data.Models
 {
     public class Garage
     {
@@ -13,6 +12,6 @@ namespace VehicleProfile.API.Models
         public string City { get; set; }
         public string County { get; set; }
         public string URL { get; set; }
-        public List<VehicleProfile> VehicleProfiles { get; set; }
+     
     }
 }
