@@ -10,7 +10,7 @@ using Vehicle.Data.DBContexts;
 namespace Vehicle.Data.Migrations
 {
     [DbContext(typeof(VehicleContext))]
-    [Migration("20201124115418_InitialCreate")]
+    [Migration("20201125182917_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,10 @@ namespace Vehicle.Data.Migrations
                     b.HasIndex("VehicleProfileId");
 
                     b.ToTable("Garages");
+
+                    b.HasData(
+                        new { GarageId = 1, City = "Sligo", CompanyName = "GarageFix", County = "Sligo", Street = "39 Connor Street", URL = "www.GarageFix.test" }
+                    );
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.NCTResult", b =>
@@ -60,11 +64,11 @@ namespace Vehicle.Data.Migrations
 
                     b.Property<DateTime>("ValidUntil");
 
-                    b.Property<int?>("VehicleProfileNCTId");
+                    b.Property<int>("VehicleProfileId");
 
                     b.HasKey("NctResultId");
 
-                    b.HasIndex("VehicleProfileNCTId");
+                    b.HasIndex("VehicleProfileId");
 
                     b.ToTable("NCTResults");
                 });
@@ -86,7 +90,7 @@ namespace Vehicle.Data.Migrations
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleProfile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VehicleProfileId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -116,11 +120,11 @@ namespace Vehicle.Data.Migrations
 
                     b.Property<string>("Transmission");
 
-                    b.Property<int?>("VehicleOwnerId");
+                    b.Property<int>("VehicleOwnerId");
 
                     b.Property<string>("Vin");
 
-                    b.HasKey("Id");
+                    b.HasKey("VehicleProfileId");
 
                     b.HasIndex("VehicleOwnerId");
 
@@ -129,7 +133,7 @@ namespace Vehicle.Data.Migrations
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleService", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VehicleServiceId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -141,7 +145,7 @@ namespace Vehicle.Data.Migrations
 
                     b.Property<int?>("VehicleProfileId");
 
-                    b.HasKey("Id");
+                    b.HasKey("VehicleServiceId");
 
                     b.HasIndex("VehicleProfileId");
 
@@ -157,16 +161,18 @@ namespace Vehicle.Data.Migrations
 
             modelBuilder.Entity("Vehicle.Data.Models.NCTResult", b =>
                 {
-                    b.HasOne("Vehicle.Data.Models.VehicleProfile", "VehicleProfileNCT")
+                    b.HasOne("Vehicle.Data.Models.VehicleProfile", "Vehicle")
                         .WithMany("NCTResults")
-                        .HasForeignKey("VehicleProfileNCTId");
+                        .HasForeignKey("VehicleProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleProfile", b =>
                 {
                     b.HasOne("Vehicle.Data.Models.VehicleOwner", "VehicleOwner")
                         .WithMany("VehicleProfiles")
-                        .HasForeignKey("VehicleOwnerId");
+                        .HasForeignKey("VehicleOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleService", b =>

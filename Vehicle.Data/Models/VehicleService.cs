@@ -6,9 +6,9 @@ namespace Vehicle.Data.Models
 {
     public class VehicleService
     {
-        public int Id { get; set; }
+        public int VehicleServiceId { get; set; }
         public string ServiceDetails { get; set; }
-        public ServicesTypes ServiceType { get; set; }
+        public virtual ServicesTypes ServiceType { get; set; }
         public string InvoiceURL { get; set; }
     }
 

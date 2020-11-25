@@ -9,7 +9,7 @@ namespace Vehicle.Data.Models
         public int VehicleOwnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<VehicleProfile> VehicleProfiles { get; set; }
+        public virtual ICollection<VehicleProfile> VehicleProfiles { get; set; }
 
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Vehicle.Data.Models
 {
@@ -11,6 +9,7 @@ namespace Vehicle.Data.Models
         public DateTime Date { get; set; }
         public DateTime ValidUntil { get; set; }
         public string Comments { get; set; }
-        public VehicleProfile VehicleProfileNCT { get; set; }
+        public int VehicleProfileId { get; set; }
+        public virtual VehicleProfile Vehicle { get; set; }
     }
 }

@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\3rdpartylicenses.txt" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\favicon.ico" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\index.html" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\inline.17c10189bd90d7600ee2.bundle.js" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\main.9b4559bd7dadd33f231f.bundle.js" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\MaterialIcons-Regular.012cf6a10129e2275d79.woff" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\MaterialIcons-Regular.570eb83859dc23dd0eec.woff2" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\MaterialIcons-Regular.a37b0c01c0baf1888ca8.ttf" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\MaterialIcons-Regular.e79bfd88537def476913.eot" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\polyfills.6192ea4aa92e2c035c4f.bundle.js" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\styles.20f9545db506af88f79c.bundle.css" />
+    <Content Remove="C:\Users\A_Les\.nuget\packages\entityframeworkcore.diagrams\0.2.1\contentFiles\any\netstandard1.6\wwwroot\db-diagrams\vendor.1e6c48ca7cd824f14f1f.bundle.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />
   </ItemGroup>
 

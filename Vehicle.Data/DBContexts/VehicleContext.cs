@@ -20,7 +20,17 @@ namespace Vehicle.Data.DBContexts
         public DbSet<VehicleService> VehicleServices { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<Garage>().HasData(
+                     new Garage
+                     {
+                         GarageId=1,
+                         CompanyName = "GarageFix",
+                         URL = "www.GarageFix.test",
+                         Street = "39 Connor Street",
+                         City = "Sligo",
+                         County = "Sligo",
+                     }
+                 );
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Vehicle.Data.Models
 {
     public class VehicleProfile
     {
-        public int Id { get; set; }
+        public int VehicleProfileId { get; set; }
         public string RegistrationNumber { get; set; }
         public string Description { get; set; }
         public string RegistrationYear { get; set; }
@@ -21,9 +21,10 @@ namespace Vehicle.Data.Models
         public string Vin { get; set; }
         public string ImageUrl { get; set; }
         public string County { get; set; }
-        public List<NCTResult> NCTResults { get; set; }
-        public VehicleOwner VehicleOwner { get; set; }
-        public List<VehicleService> VehicleServices { get; set; }
-        public List<Garage> Garages { get; set; }
+        public int VehicleOwnerId { get; set; }
+        public virtual VehicleOwner VehicleOwner { get; set; }
+        public virtual ICollection<NCTResult> NCTResults { get; set; }    
+        public virtual ICollection<VehicleService> VehicleServices { get; set; }
+        public virtual ICollection<Garage> Garages { get; set; }
     }
 }

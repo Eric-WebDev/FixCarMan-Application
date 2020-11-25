@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vehicle.Data\Vehicle.Data.csproj" />
+    <ProjectReference Include="..\Vehicle.Logic\Vehicle.Logic.csproj" />
   </ItemGroup>
 
 </Project>
