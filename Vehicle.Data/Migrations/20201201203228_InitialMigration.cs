@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Vehicle.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,6 +124,33 @@ namespace Vehicle.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Photo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Url = table.Column<string>(nullable: true),
+                    IsMain = table.Column<bool>(nullable: false),
+                    NctResultId = table.Column<int>(nullable: true),
+                    VehicleProfileId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photo_NCTResults_NctResultId",
+                        column: x => x.NctResultId,
+                        principalTable: "NCTResults",
+                        principalColumn: "NctResultId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Photo_VehicleProfiles_VehicleProfileId",
+                        column: x => x.VehicleProfileId,
+                        principalTable: "VehicleProfiles",
+                        principalColumn: "VehicleProfileId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Garages",
                 columns: new[] { "GarageId", "City", "CompanyName", "County", "Street", "URL", "VehicleProfileId" },
@@ -137,6 +164,16 @@ namespace Vehicle.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_NCTResults_VehicleProfileId",
                 table: "NCTResults",
+                column: "VehicleProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photo_NctResultId",
+                table: "Photo",
+                column: "NctResultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photo_VehicleProfileId",
+                table: "Photo",
                 column: "VehicleProfileId");
 
             migrationBuilder.CreateIndex(
@@ -156,10 +193,13 @@ namespace Vehicle.Data.Migrations
                 name: "Garages");
 
             migrationBuilder.DropTable(
-                name: "NCTResults");
+                name: "Photo");
 
             migrationBuilder.DropTable(
                 name: "VehicleServices");
+
+            migrationBuilder.DropTable(
+                name: "NCTResults");
 
             migrationBuilder.DropTable(
                 name: "VehicleProfiles");

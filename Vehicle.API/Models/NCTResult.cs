@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Vehicle.Data.Models
+namespace Vehicle.API.Data
 {
     public class NCTResult
     {
@@ -10,8 +12,7 @@ namespace Vehicle.Data.Models
         public DateTime Date { get; set; }
         public DateTime ValidUntil { get; set; }
         public string Comments { get; set; }
-        public int VehicleProfileId { get; set; }
-        public virtual VehicleProfile Vehicle { get; set; }
-        public virtual ICollection<Photo> NCTScans { get; set; }
+        public List<VehicleProfile> VehicleProfiles  { get; set; }
+
     }
 }

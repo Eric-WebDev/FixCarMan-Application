@@ -10,8 +10,8 @@ using Vehicle.Data.DBContexts;
 namespace Vehicle.Data.Migrations
 {
     [DbContext(typeof(VehicleContext))]
-    [Migration("20201125182917_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201201203228_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,28 @@ namespace Vehicle.Data.Migrations
                     b.HasIndex("VehicleProfileId");
 
                     b.ToTable("NCTResults");
+                });
+
+            modelBuilder.Entity("Vehicle.Data.Models.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsMain");
+
+                    b.Property<int?>("NctResultId");
+
+                    b.Property<string>("Url");
+
+                    b.Property<int?>("VehicleProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NctResultId");
+
+                    b.HasIndex("VehicleProfileId");
+
+                    b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleOwner", b =>
@@ -165,6 +187,17 @@ namespace Vehicle.Data.Migrations
                         .WithMany("NCTResults")
                         .HasForeignKey("VehicleProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vehicle.Data.Models.Photo", b =>
+                {
+                    b.HasOne("Vehicle.Data.Models.NCTResult")
+                        .WithMany("NCTScans")
+                        .HasForeignKey("NctResultId");
+
+                    b.HasOne("Vehicle.Data.Models.VehicleProfile")
+                        .WithMany("Photos")
+                        .HasForeignKey("VehicleProfileId");
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleProfile", b =>

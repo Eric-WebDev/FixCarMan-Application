@@ -71,6 +71,28 @@ namespace Vehicle.Data.Migrations
                     b.ToTable("NCTResults");
                 });
 
+            modelBuilder.Entity("Vehicle.Data.Models.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsMain");
+
+                    b.Property<int?>("NctResultId");
+
+                    b.Property<string>("Url");
+
+                    b.Property<int?>("VehicleProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NctResultId");
+
+                    b.HasIndex("VehicleProfileId");
+
+                    b.ToTable("Photo");
+                });
+
             modelBuilder.Entity("Vehicle.Data.Models.VehicleOwner", b =>
                 {
                     b.Property<int>("VehicleOwnerId")
@@ -163,6 +185,17 @@ namespace Vehicle.Data.Migrations
                         .WithMany("NCTResults")
                         .HasForeignKey("VehicleProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vehicle.Data.Models.Photo", b =>
+                {
+                    b.HasOne("Vehicle.Data.Models.NCTResult")
+                        .WithMany("NCTScans")
+                        .HasForeignKey("NctResultId");
+
+                    b.HasOne("Vehicle.Data.Models.VehicleProfile")
+                        .WithMany("Photos")
+                        .HasForeignKey("VehicleProfileId");
                 });
 
             modelBuilder.Entity("Vehicle.Data.Models.VehicleProfile", b =>

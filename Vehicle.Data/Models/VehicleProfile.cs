@@ -26,5 +26,6 @@ namespace Vehicle.Data.Models
         public virtual ICollection<NCTResult> NCTResults { get; set; }    
         public virtual ICollection<VehicleService> VehicleServices { get; set; }
         public virtual ICollection<Garage> Garages { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
     }
 }
