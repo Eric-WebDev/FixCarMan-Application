@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.API", "Vehicle.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Data", "Vehicle.Data\Vehicle.Data.csproj", "{B1526BCB-E127-486C-9E39-AC4F07D65665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Logic", "Vehicle.Logic\Vehicle.Logic.csproj", "{FDCFAFD7-C14D-41D7-9753-0CCCBECAE33B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Logic", "Vehicle.Logic\Vehicle.Logic.csproj", "{FDCFAFD7-C14D-41D7-9753-0CCCBECAE33B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
