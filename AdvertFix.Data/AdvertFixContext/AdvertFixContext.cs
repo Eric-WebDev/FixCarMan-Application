@@ -1,10 +1,9 @@
-﻿
-using AdvertFix.Data.Models;
+﻿using AdvertFix.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-namespace AdvertFix.Data.AdvertFixContext
+namespace AdvertFix.Data
 {
    public class AdvertFixContext : DbContext
     {
