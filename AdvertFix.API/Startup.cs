@@ -1,17 +1,11 @@
-﻿using AdvertFix.Data.AdvertFixContext;
+﻿using AdvertFix.Data.Context;
+using AdvertFix.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdvertFix.API
 {
@@ -32,7 +26,7 @@ namespace AdvertFix.API
            // services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<AdvertFixContext>(o => o.UseSqlServer(Configuration.GetConnectionString("AdvertFixDataDB")));
-            //services.AddTransient<IAdvertRepository, AdvertRepository>();
+            services.AddTransient<IAdvertRepository, AdvertRepository>();
             //services.AddAutoMapper();
             services.AddCors(opt =>
             {

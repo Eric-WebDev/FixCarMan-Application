@@ -1,13 +1,14 @@
-﻿using AdvertFix.Domain.Models;
+﻿using AdvertFix.Data.Context;
+using AdvertFix.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AdvertFix.Data
+namespace AdvertFix.Data.Repository
 {
-    public class AdvertRepository
+    public class AdvertRepository:IAdvertRepository
     {
         private readonly AdvertFixContext _dbContext;
 

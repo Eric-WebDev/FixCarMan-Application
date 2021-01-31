@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdvertFix.Data
+namespace AdvertFix.Data.Repository
 {
     public interface IAdvertRepository
     {
