@@ -21,8 +21,11 @@ namespace AdvertFix.Data.Migrations
 
             modelBuilder.Entity("AdvertFix.Domain.Models.Advert", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AdvertiserId");
 
                     b.Property<string>("CarModel");
 
@@ -36,6 +39,8 @@ namespace AdvertFix.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdvertiserId");
+
                     b.ToTable("Adverts");
                 });
 
@@ -45,8 +50,6 @@ namespace AdvertFix.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("AdvertId");
-
                     b.Property<string>("AdvertiserName");
 
                     b.Property<string>("Email");
@@ -54,8 +57,6 @@ namespace AdvertFix.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.HasKey("AdvertiserId");
-
-                    b.HasIndex("AdvertId");
 
                     b.ToTable("Advertisers");
                 });
@@ -65,32 +66,31 @@ namespace AdvertFix.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("AdvertId");
-
                     b.Property<bool>("IsMain");
+
+                    b.Property<int?>("PhotoAdvertId");
 
                     b.Property<string>("Url");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertId");
+                    b.HasIndex("PhotoAdvertId");
 
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("AdvertFix.Domain.Models.Advertiser", b =>
+            modelBuilder.Entity("AdvertFix.Domain.Models.Advert", b =>
                 {
-                    b.HasOne("AdvertFix.Domain.Models.Advert", "AdvertFix")
-                        .WithMany("UserAdverts")
-                        .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("AdvertFix.Domain.Models.Advertiser", "Advertiser")
+                        .WithMany()
+                        .HasForeignKey("AdvertiserId");
                 });
 
             modelBuilder.Entity("AdvertFix.Domain.Models.Photo", b =>
                 {
-                    b.HasOne("AdvertFix.Domain.Models.Advert")
+                    b.HasOne("AdvertFix.Domain.Models.Advert", "PhotoAdvert")
                         .WithMany("Photos")
-                        .HasForeignKey("AdvertId");
+                        .HasForeignKey("PhotoAdvertId");
                 });
 #pragma warning restore 612, 618
         }

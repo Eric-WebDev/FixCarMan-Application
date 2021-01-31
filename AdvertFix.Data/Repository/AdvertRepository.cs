@@ -36,7 +36,9 @@ namespace AdvertFix.Data.Repository
 
         public IEnumerable<Advert> GetAllAdverts()
         {
-            return _dbContext.Adverts.ToList();
+            return _dbContext.Adverts
+                .Include("Advertiser")
+                .ToList();
         }
 
         public void Save()
@@ -49,5 +51,15 @@ namespace AdvertFix.Data.Repository
             _dbContext.Entry(advert).State = EntityState.Modified;
             Save();
         }
+
+        //Advert IAdvertRepository.GetAdvertOwnerByAdvertID(int advertId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Advert IAdvertRepository.GetPhotosByAdvertID(int photoId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

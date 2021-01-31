@@ -9,6 +9,8 @@ namespace AdvertFix.Data.Repository
     {
         IEnumerable<Advert> GetAllAdverts();
         Advert GetAdvertByID(int advertId);
+        //Advert GetAdvertOwnerByAdvertID(int advertId);
+        //Advert GetPhotosByAdvertID(int advertId);
         void AddAdvert(Advert advert);
         void DeleteAdvert(int advertId);
         void UpdateAdvert(Advert advert);
