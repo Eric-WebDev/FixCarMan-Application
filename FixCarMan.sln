@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Logic", "Vehicle.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvertFix.API", "AdvertFix.API\AdvertFix.API.csproj", "{4B21FA72-0751-485D-8394-043F1339A61D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertFix.Data", "AdvertFix.Data\AdvertFix.Data.csproj", "{9FDAD385-610A-48F5-8B52-65B363930946}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvertFix.Data", "AdvertFix.Data\AdvertFix.Data.csproj", "{9FDAD385-610A-48F5-8B52-65B363930946}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertFix.Logic", "AdvertFix.Logic\AdvertFix.Logic.csproj", "{E92AB923-54D1-4CE8-9648-EAD788510847}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvertFix.Domain", "AdvertFix.Logic\AdvertFix.Domain.csproj", "{E92AB923-54D1-4CE8-9648-EAD788510847}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

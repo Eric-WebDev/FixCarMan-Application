@@ -9,13 +9,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AdvertFix.Data\AdvertFix.Data.csproj" />
-    <ProjectReference Include="..\AdvertFix.Logic\AdvertFix.Logic.csproj" />
+    <ProjectReference Include="..\AdvertFix.Logic\AdvertFix.Domain.csproj" />
   </ItemGroup>
 
 </Project>

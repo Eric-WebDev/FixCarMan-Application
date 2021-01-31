@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdvertFix.Data.Models
+namespace AdvertFix.Domain.Models
 {
     public class Photo
     {

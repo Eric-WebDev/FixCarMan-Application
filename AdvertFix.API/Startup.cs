@@ -32,6 +32,8 @@ namespace AdvertFix.API
            // services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<AdvertFixContext>(o => o.UseSqlServer(Configuration.GetConnectionString("AdvertFixDataDB")));
+            //services.AddTransient<IAdvertRepository, AdvertRepository>();
+            //services.AddAutoMapper();
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
