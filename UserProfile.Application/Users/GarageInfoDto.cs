@@ -1,27 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-
-namespace UserProfile.API.Models
+namespace UserProfile.Application.Users
 {
-    public class User
+    public class GarageInfoDto
     {
-        public int Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
         public string CompanyName { get; set; }
 
         public string ProfileDescription { get; set; }
 
-        public string Email { get; set; }
-
-        public string PhoneNumber { get; set; }
-
         public string URL { get; set; }
-
-        public DateTime? Birthday { get; set; }
 
         public string Street { get; set; }
 
@@ -31,5 +20,6 @@ namespace UserProfile.API.Models
 
         public string ZipCode { get; set; }
         public bool IsUserGarage { get; set; }
+        public string Image { get; set; }
     }
 }
