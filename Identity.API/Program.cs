@@ -1,15 +1,17 @@
-﻿using System;
+using Identity.Application.Persistance;
+using Identity.Domain;
+using IdentityAPI.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using UserProfile.Data;
-using UserProfile.Domain;
+using System;
 
 
-namespace UserProfile.API
+namespace Identity.API
 {
     public class Program
     {
@@ -26,7 +28,7 @@ namespace UserProfile.API
                     var context = services.GetRequiredService<DataContext>();
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     context.Database.Migrate();
-                    //Seed.SeedData(context, userManager).Wait();
+                    Seed.SeedData(context, userManager).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -43,4 +45,3 @@ namespace UserProfile.API
                 .UseStartup<Startup>();
     }
 }
-

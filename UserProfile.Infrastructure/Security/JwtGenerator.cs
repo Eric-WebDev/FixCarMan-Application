@@ -1,3 +1,5 @@
+using Identity.Application.Interfaces;
+using Identity.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -5,10 +7,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UserProfile.Application.Interfaces;
-using UserProfile.Domain;
 
-namespace UserProfile.Infrastructure.Security
+
+namespace Identity.Infrastructure.Security
 {
     public class JwtGenerator : IJwtGenerator
     {

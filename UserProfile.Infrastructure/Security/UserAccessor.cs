@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Security.Claims;
+using Identity.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
-using UserProfile.Application.Interfaces;
+
 
 namespace UserProfile.Application.Security
 {

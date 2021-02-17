@@ -1,13 +1,14 @@
+using IdentityAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using UserProfile.Persistance;
-using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace UserProfile.Infrastructure.Security
+
+namespace Identity.Infrastructure.Security
 {
     public class IsGarageRequirement : IAuthorizationRequirement
     {

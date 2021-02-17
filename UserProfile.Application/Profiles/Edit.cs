@@ -5,7 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UserProfile.Application.Interfaces;
-using UserProfile.Persistance;
+using UserProfile.Data;
 
 namespace UserProfile.Application.Profiles
 {

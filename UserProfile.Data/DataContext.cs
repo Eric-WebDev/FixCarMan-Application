@@ -1,6 +1,9 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Identity.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace UserProfile.Persistance
+namespace IdentityAPI.Data
 {
     public class DataContext : IdentityDbContext<AppUser>
     {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using UseProfile.Application.Validators;
 using UserProfile.Application.Errors;
 using UserProfile.Application.Interfaces;
-using UserProfile.Persistance;
+using UserProfile.Data;
 
 namespace UserProfile.Application
 {

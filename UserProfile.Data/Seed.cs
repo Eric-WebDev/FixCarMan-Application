@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Identity.Domain;
+using IdentityAPI.Data;
 using Microsoft.AspNetCore.Identity;
-using UserProfile.Domain;
 
-namespace UserProfile.Persistance
+namespace Identity.Application.Persistance
 {
     public class Seed
     {
@@ -18,19 +19,20 @@ namespace UserProfile.Persistance
                 {
                     new AppUser
                     {
-                        Id="a",
+                        Id = "a",
                         UserName = "bob",
                         Email = "bob@test.com"
+                        
                     },
                     new AppUser
                     {
-                        Id="b",
+                        Id = "b",
                         UserName = "jane",
                         Email = "jane@test.com"
                     },
                     new AppUser
                     {
-                        Id="c",
+                        Id = "c",
                         UserName = "tom",
                         Email = "tom@test.com"
                     },
@@ -38,7 +40,7 @@ namespace UserProfile.Persistance
 
                 foreach (var user in users)
                 {
-                    await userManager.CreateAsync(user, "Pa$$w0rd1");
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
             }
 
@@ -63,10 +65,9 @@ namespace UserProfile.Persistance
                     },
 
                 };
-
                 await context.AppUsersProfiles.AddRangeAsync(profile);
                 await context.SaveChangesAsync();
-            }
+            }       
+        }
         }
     }
-}

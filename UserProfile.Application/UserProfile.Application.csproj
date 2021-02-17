@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserProfile.Domain\UserProfile.Domain.csproj" />
-    <ProjectReference Include="..\UserProfile.Persistance\UserProfile.Persistance.csproj" />
+    <ProjectReference Include="..\UserProfile.Data\Identity.Data.csproj" />
+    <ProjectReference Include="..\UserProfile.Domain\Identity.Domain.csproj" />
   </ItemGroup>
 
 </Project>

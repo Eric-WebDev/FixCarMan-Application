@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UserProfile.Application.Errors;
 using UserProfile.Application.Interfaces;
-using UserProfile.Persistance;
+using UserProfile.Data;
 
 namespace UserProfile.Application.Profiles
 {
@@ -27,8 +27,7 @@ namespace UserProfile.Application.Profiles
             var profile = new Profile
             {
                 Username = user.UserName,
-                Image=user.UserProfileInfo.Image,
-                Description=user.UserProfileInfo.ProfileDescription
+              
             };
 
             return profile;

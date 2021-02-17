@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserProfile.Domain
+namespace Identity.Domain
 {
     public class UserProfileDetails
     {

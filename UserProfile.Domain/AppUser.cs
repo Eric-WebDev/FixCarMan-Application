@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Identity;
 using System;
-
-namespace UserProfile.Domain
+using Microsoft.AspNetCore.Identity;
+namespace Identity.Domain
 {
     public class AppUser : IdentityUser
     {
-        public string Username { get; set; }
+        public string DisplayUsername { get; set; }
         public virtual UserProfileDetails UserProfileInfo { get; set; }
     }
 }
