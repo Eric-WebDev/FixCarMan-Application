@@ -35,7 +35,7 @@ namespace UserProfile.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("UserProfileDB")));
             //services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddCors(opt =>
@@ -54,7 +54,7 @@ namespace UserProfile.API
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
                 //.AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_1);
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
