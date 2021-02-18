@@ -1,6 +1,6 @@
-
 using FluentValidation.AspNetCore;
 using Identity.Application.Interfaces;
+using Identity.Application.Profiles;
 using Identity.Data;
 using Identity.Domain;
 using Identity.Infrastructure.Seciurity;
@@ -16,6 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 
@@ -81,6 +84,12 @@ namespace Identity.API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddControllers();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            //    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            //    c.IncludeXmlComments(xmlPath);
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,6 +110,12 @@ namespace Identity.API
             {
                 endpoints.MapControllers();
             });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity.API API V1");
+            //    c.RoutePrefix = string.Empty;
+            //});
         }
     }
 }
