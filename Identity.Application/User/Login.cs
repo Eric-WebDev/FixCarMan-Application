@@ -57,9 +57,9 @@ namespace Identity.Application.User
                     // TODO: generate token
                     return new User
                     {
-                        DisplayUserName = user.UserName,
+                        Username = user.UserName,
                         Token = _jwtGenerator.CreateToken(user),
-                        Image = user.UserProfileInfo.Image
+                        //Image = user.UserProfileInfo.Image
                     };
                 }
 

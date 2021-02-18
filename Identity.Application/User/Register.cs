@@ -21,8 +21,8 @@ namespace Identity.Application.User
     {
         public class Command : IRequest<User>
         {
-            public string Username { get; set; }
             public string Email { get; set; }
+            public string Username { get; set; }         
             public string Password { get; set; }
         }
 
@@ -30,8 +30,8 @@ namespace Identity.Application.User
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
+                RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.Password).Password();
             }
         }
@@ -69,9 +69,9 @@ namespace Identity.Application.User
                 {
                     return new User
                     {
-                        DisplayUserName = user.UserName,
+                        Username = user.UserName,
                         Token = _jwtGenerator.CreateToken(user),                      
-                        Image = user.UserProfileInfo.Image
+                       // Image = user.UserProfileInfo.Image
                     };
                 }
 
