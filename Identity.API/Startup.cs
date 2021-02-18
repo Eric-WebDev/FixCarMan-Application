@@ -1,4 +1,5 @@
 
+using FluentValidation.AspNetCore;
 using Identity.Application.Interfaces;
 using Identity.Data;
 using Identity.Domain;
@@ -48,8 +49,8 @@ namespace Identity.API
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
-            });
-                //.AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
+            })
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
                
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
