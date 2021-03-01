@@ -31,7 +31,6 @@ namespace Identity.Application.User
             public CommandValidator()
             {
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
-                RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.Password).Password();
             }
         }
@@ -69,7 +68,7 @@ namespace Identity.Application.User
                 {
                     return new User
                     {
-                        Username = user.UserName,
+                        Username = user.DisplayUserName,
                         Token = _jwtGenerator.CreateToken(user),                      
                        // Image = user.UserProfileInfo.Image
                     };
