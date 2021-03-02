@@ -26,7 +26,6 @@ namespace Identity.Application.Profiles
 
             var profile = new Profile
             {
-                DisplayName = user.DisplayUserName,
                 Username = user.UserName
       
             };

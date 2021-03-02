@@ -25,8 +25,8 @@ namespace Identity.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: false),
+                    Id = table.Column<string>(nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
@@ -40,11 +40,23 @@ namespace Identity.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    DisplayUsername = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    CompanyName = table.Column<string>(nullable: true),
+                    ProfileDescription = table.Column<string>(nullable: true),
+                    URL = table.Column<string>(nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    County = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true),
+                    IsUserGarage = table.Column<bool>(nullable: false),
+                    AdvertId = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.UserName);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,36 +81,6 @@ namespace Identity.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppUsersProfiles",
-                columns: table => new
-                {
-                    AppUserId = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    CompanyName = table.Column<string>(nullable: true),
-                    ProfileDescription = table.Column<string>(nullable: true),
-                    URL = table.Column<string>(nullable: true),
-                    Birthday = table.Column<DateTime>(nullable: true),
-                    Street = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    County = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    IsUserGarage = table.Column<bool>(nullable: false),
-                    AdvertId = table.Column<string>(nullable: true),
-                    Image = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppUsersProfiles", x => x.AppUserId);
-                    table.ForeignKey(
-                        name: "FK_AppUsersProfiles_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -115,7 +97,7 @@ namespace Identity.Data.Migrations
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -135,7 +117,7 @@ namespace Identity.Data.Migrations
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -159,7 +141,7 @@ namespace Identity.Data.Migrations
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -179,7 +161,7 @@ namespace Identity.Data.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -225,9 +207,6 @@ namespace Identity.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AppUsersProfiles");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

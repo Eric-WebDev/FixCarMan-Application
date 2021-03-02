@@ -63,7 +63,7 @@ namespace Identity.Application.Profiles
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var profile = new UserProfileDetails
+                var profile = new AppUser
                 {
                     LastName = request.LastName,
                     FirstName = request.FirstName,
@@ -76,7 +76,6 @@ namespace Identity.Application.Profiles
                    County=request.County,
                    ZipCode=request.ZipCode,
                    IsUserGarage=request.IsUserGarage,
-                   AdvertId=request.AdvertId,
                    Image=request.Image
                 };
 

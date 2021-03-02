@@ -22,6 +22,9 @@ using System.Text;
 using Microsoft.AspNetCore.Server.IISIntegration;
 using Identity.API.Middleware;
 using Identity.Application.User;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Identity.API
 {
@@ -44,12 +47,17 @@ namespace Identity.API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithExposedHeaders("WWW-Authenticate")
+                        .WithOrigins("http://localhost:3000")
+                        .AllowCredentials();
                 });
             });
             //services.AddMediatR(Assembly.GetExecutingAssembly());
             //services.AddMediatR(typeof(Login.Handler).Assembly)
-              // services.AddMediatR(typeof(Register.Handler).Assembly);
+            // services.AddMediatR(typeof(Register.Handler).Assembly);
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(Register.Handler).Assembly);
             //services.AddAutoMapper(typeof(List.Handler));
             services.AddMvc(opt =>
@@ -57,8 +65,8 @@ namespace Identity.API
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
-               
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
+               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
@@ -81,14 +89,28 @@ namespace Identity.API
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = key,
                         ValidateAudience = false,
-                        ValidateIssuer = false
+                        ValidateIssuer = false,
+                        ValidateLifetime = true
+                    };
+                    opt.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                            {
+                                context.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
-            services.AddAuthentication(IISDefaults.AuthenticationScheme);
- 
-
+   
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IProfileReader, ProfileReader>();
             services.AddControllers();
             //services.AddSwaggerGen(c =>
             //{

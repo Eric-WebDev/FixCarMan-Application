@@ -37,7 +37,7 @@ namespace Identity.Infrastructure.Seciurity
                 if (userProfileDetails.IsUserGarage == true)
                 {
                     var garage = userProfileDetails;
-                    if (garage?.AppUser?.UserName == currentUserName)
+                    if (garage?.UserName == currentUserName)
                         context.Succeed(requirement);
                 }
 

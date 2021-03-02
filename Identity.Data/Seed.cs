@@ -21,7 +21,18 @@ namespace Identity.Data
                     {
                         Id = "a",
                         UserName = "bob",
-                        Email = "bob@test.com"
+                        Email = "bob@test.com",
+                        FirstName = "Tom",
+                        LastName = "Got",
+                        CompanyName = "CarFix",
+                        ProfileDescription= "the best service",
+                        URL = "www.CarFix.test",
+                        Birthday =  null,
+                        Street =  "39 Avenue",
+                        City = "Sligo",
+                        County = "Sligo",
+                        ZipCode =  "2GRE1",
+                        IsUserGarage =  true
 
                     },
                     new AppUser
@@ -44,30 +55,30 @@ namespace Identity.Data
                 }
             }
 
-            if (!context.AppUsersProfiles.Any())
-            {
-                var profile = new List<UserProfileDetails>
-                {
-                    new UserProfileDetails
-                    {
-                        AppUserId = "a",
-                        FirstName = "Tom",
-                        LastName = "Got",
-                        CompanyName = "CarFix",
-                        ProfileDescription= "the best service",
-                        URL = "www.CarFix.test",
-                        Birthday =  null,
-                        Street =  "39 Avenue",
-                        City = "Sligo",
-                        County = "Sligo",
-                        ZipCode =  "2GRE1",
-                        IsUserGarage =  true
-                    },
+            //if (!context.AppUsersProfiles.Any())
+            //{
+            //    var profile = new List<UserProfileDetails>
+            //    {
+            //        new UserProfileDetails
+            //        {
+            //            AppUserId = "a",
+            //            FirstName = "Tom",
+            //            LastName = "Got",
+            //            CompanyName = "CarFix",
+            //            ProfileDescription= "the best service",
+            //            URL = "www.CarFix.test",
+            //            Birthday =  null,
+            //            Street =  "39 Avenue",
+            //            City = "Sligo",
+            //            County = "Sligo",
+            //            ZipCode =  "2GRE1",
+            //            IsUserGarage =  true
+            //        },
 
-                };
-                await context.AppUsersProfiles.AddRangeAsync(profile);
+            //    };
+            //    await context.AppUsersProfiles.AddRangeAsync(profile);
                 await context.SaveChangesAsync();
             }
         }
     }
-}
+

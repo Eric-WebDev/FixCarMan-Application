@@ -13,18 +13,15 @@ namespace Identity.Data
         {
         }
 
-        public DbSet<UserProfileDetails> AppUsersProfiles { get; set; }
+        public DbSet<AppUser> AppUsersProfiles { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<UserProfileDetails>(x => x.HasKey(ua =>
-                new { ua.AppUserId }));
+            builder.Entity<AppUser>(x => x.HasKey(ua =>
+                new { ua.UserName }));
 
-            builder.Entity<UserProfileDetails>()
-                .HasOne(u => u.AppUser)
-                .WithOne(a => a.UserProfileInfo)
-                .HasForeignKey<UserProfileDetails>(u => u.AppUserId);
+           
         }
     }
 }
