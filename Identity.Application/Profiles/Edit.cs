@@ -4,8 +4,6 @@ using Identity.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +14,28 @@ namespace Identity.Application.Profiles
         public class Command : IRequest
         {            
             public string Username { get; set; }
+            public string FirstName { get; set; }
+
+            public string LastName { get; set; }
+
+            public string CompanyName { get; set; }
+
+            public string ProfileDescription { get; set; }
+
+            //public string URL { get; set; }
+
+            //public DateTime? Birthday { get; set; }
+
+            public string Street { get; set; }
+
+            public string City { get; set; }
+
+            public string County { get; set; }
+
+            //public string ZipCode { get; set; }
+            //public bool IsUserGarage { get; set; }
+            //public string AdvertId { get; set; }
+            public string Image { get; set; }
 
         }
 
@@ -42,8 +62,16 @@ namespace Identity.Application.Profiles
             {
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
-                user.UserName = request.Username ?? user.UserName;
+                //user.UserName = request.Username ?? user.UserName;
 
+                user.FirstName = request.FirstName ?? user.FirstName;
+                user.LastName = request.LastName ?? user.LastName;
+                user.CompanyName = request.CompanyName ?? user.CompanyName;
+                user.ProfileDescription = request.ProfileDescription ?? user.ProfileDescription;
+                user.Street = request.Street ?? user.Street;
+                user.City = request.Street ?? user.Street;
+                user.County = request.County ?? user.County;
+                user.Image = request.Image ?? user.Image;
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;

@@ -16,9 +16,9 @@ namespace Identity.Application.Profiles
 
         public string ProfileDescription { get; set; }
 
-        public string URL { get; set; }
+        //public string URL { get; set; }
 
-        public DateTime? Birthday { get; set; }
+        //public DateTime? Birthday { get; set; }
 
         public string Street { get; set; }
 
@@ -26,9 +26,9 @@ namespace Identity.Application.Profiles
 
         public string County { get; set; }
 
-        public string ZipCode { get; set; }
-        public bool IsUserGarage { get; set; }
-        public string AdvertId { get; set; }
+        //public string ZipCode { get; set; }
+        //public bool IsUserGarage { get; set; }
+        //public string AdvertId { get; set; }
         public string Image { get; set; }
     }
 }

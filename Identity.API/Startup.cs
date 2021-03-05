@@ -60,13 +60,13 @@ namespace Identity.API
             // services.AddMediatR(typeof(Register.Handler).Assembly);
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(Register.Handler).Assembly);
             //services.AddAutoMapper(typeof(List.Handler));
-            services.AddMvc(opt =>
+            services.AddControllers(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
-               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
+
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
@@ -90,28 +90,28 @@ namespace Identity.API
                         IssuerSigningKey = key,
                         ValidateAudience = false,
                         ValidateIssuer = false,
-                        ValidateLifetime = true
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
                     };
-                    opt.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
-                            {
-                                context.Token = accessToken;
-                            }
+                    //opt.Events = new JwtBearerEvents
+                    //{
+                    //    OnMessageReceived = context =>
+                    //    {
+                    //        var accessToken = context.Request.Query["access_token"];
+                    //        var path = context.HttpContext.Request.Path;
+                    //        if (!string.IsNullOrEmpty(accessToken))
+                    //        {
+                    //            context.Token = accessToken;
+                    //        }
 
-                            return Task.CompletedTask;
-                        }
-                    };
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
                 });
    
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
-            services.AddControllers();
             //services.AddSwaggerGen(c =>
             //{
             //    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -135,9 +135,9 @@ namespace Identity.API
             }
             //app.UseHttpsRedirection();
             app.UseRouting();
-            //app.UseAuthorization();
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

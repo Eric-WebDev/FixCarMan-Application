@@ -18,10 +18,10 @@ namespace Identity.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<AppUser>(x => x.HasKey(ua =>
-                new { ua.UserName }));
+            builder.Entity<AppUser>(x => x.HasIndex(ua =>
+                new { ua.UserName }).IsUnique());
+         
 
-           
         }
     }
 }

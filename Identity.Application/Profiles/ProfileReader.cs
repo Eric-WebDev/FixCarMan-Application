@@ -26,7 +26,14 @@ namespace Identity.Application.Profiles
 
             var profile = new Profile
             {
-                Username = user.UserName
+                Username = user.UserName,
+                FirstName= user.FirstName,
+                LastName = user.LastName,
+                ProfileDescription=user.ProfileDescription,
+                Street=user.Street,
+                City=user.City,
+                County=user.County,
+                Image=user.Image
       
             };
 
