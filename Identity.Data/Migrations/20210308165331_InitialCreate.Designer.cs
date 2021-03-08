@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210308150938_Add more tables")]
-    partial class Addmoretables
+    [Migration("20210308165331_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,13 +23,9 @@ namespace Identity.Data.Migrations
 
             modelBuilder.Entity("Identity.Domain.Advert", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AdvertiserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CarModel")
                         .HasColumnType("nvarchar(max)");
@@ -48,9 +44,7 @@ namespace Identity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertiserId");
-
-                    b.ToTable("Advert");
+                    b.ToTable("Adverts");
                 });
 
             modelBuilder.Entity("Identity.Domain.AppUser", b =>
@@ -156,10 +150,6 @@ namespace Identity.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasFilter("[UserName] IS NOT NULL");
-
                     b.ToTable("AspNetUsers");
                 });
 
@@ -168,8 +158,8 @@ namespace Identity.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("AdvertId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("AdvertId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
@@ -177,11 +167,94 @@ namespace Identity.Data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdvertId");
 
-                    b.ToTable("Photo");
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Identity.Domain.UserAdvert", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("AdvertId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AppUserId", "AdvertId", "VehicleId");
+
+                    b.HasIndex("AdvertId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("UserAdverts");
+                });
+
+            modelBuilder.Entity("Identity.Domain.Vehicle", b =>
+                {
+                    b.Property<Guid>("VehicleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BodyStyle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CarMake")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CarModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("EngineSize")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FuelType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NCTResults")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfDoors")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfSeats")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationYear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Transmission")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleOwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VehicleServices")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Vin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleId");
+
+                    b.HasIndex("VehicleOwnerId");
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -315,13 +388,6 @@ namespace Identity.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Advert", b =>
-                {
-                    b.HasOne("Identity.Domain.AppUser", "Advertiser")
-                        .WithMany("Adverts")
-                        .HasForeignKey("AdvertiserId");
-                });
-
             modelBuilder.Entity("Identity.Domain.AppUser", b =>
                 {
                     b.HasOne("Identity.Domain.Photo", "Image")
@@ -334,6 +400,38 @@ namespace Identity.Data.Migrations
                     b.HasOne("Identity.Domain.Advert", null)
                         .WithMany("Photos")
                         .HasForeignKey("AdvertId");
+
+                    b.HasOne("Identity.Domain.Vehicle", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("VehicleId");
+                });
+
+            modelBuilder.Entity("Identity.Domain.UserAdvert", b =>
+                {
+                    b.HasOne("Identity.Domain.Advert", "Advert")
+                        .WithMany("UserAdverts")
+                        .HasForeignKey("AdvertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Domain.AppUser", "AppUser")
+                        .WithMany("UserAdverts")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Domain.Vehicle", "Vehicle")
+                        .WithMany("UserAdverts")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Identity.Domain.Vehicle", b =>
+                {
+                    b.HasOne("Identity.Domain.AppUser", "VehicleOwner")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("VehicleOwnerId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

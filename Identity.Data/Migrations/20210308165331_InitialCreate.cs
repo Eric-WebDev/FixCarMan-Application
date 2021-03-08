@@ -8,6 +8,22 @@ namespace Identity.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Adverts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    CarModel = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    City = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Adverts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -19,6 +35,48 @@ namespace Identity.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Url = table.Column<string>(nullable: true),
+                    IsMain = table.Column<bool>(nullable: false),
+                    AdvertId = table.Column<Guid>(nullable: true),
+                    VehicleId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Adverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "Adverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,32 +110,17 @@ namespace Identity.Data.Migrations
                     ZipCode = table.Column<string>(nullable: true),
                     IsUserGarage = table.Column<bool>(nullable: false),
                     AdvertId = table.Column<string>(nullable: true),
-                    Image = table.Column<string>(nullable: true)
+                    ImageId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        name: "FK_AspNetUsers_Photos_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Photos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,6 +208,69 @@ namespace Identity.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    VehicleId = table.Column<Guid>(nullable: false),
+                    RegistrationNumber = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    RegistrationYear = table.Column<string>(nullable: true),
+                    CarMake = table.Column<string>(nullable: true),
+                    CarModel = table.Column<string>(nullable: true),
+                    BodyStyle = table.Column<string>(nullable: true),
+                    Transmission = table.Column<string>(nullable: true),
+                    FuelType = table.Column<string>(nullable: true),
+                    NumberOfSeats = table.Column<int>(nullable: false),
+                    NumberOfDoors = table.Column<int>(nullable: false),
+                    EngineSize = table.Column<double>(nullable: false),
+                    Vin = table.Column<string>(nullable: true),
+                    NCTResults = table.Column<string>(nullable: true),
+                    VehicleServices = table.Column<string>(nullable: true),
+                    VehicleOwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.VehicleId);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_AspNetUsers_VehicleOwnerId",
+                        column: x => x.VehicleOwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAdverts",
+                columns: table => new
+                {
+                    AppUserId = table.Column<string>(nullable: false),
+                    AdvertId = table.Column<Guid>(nullable: false),
+                    VehicleId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAdverts", x => new { x.AppUserId, x.AdvertId, x.VehicleId });
+                    table.ForeignKey(
+                        name: "FK_UserAdverts_Adverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "Adverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAdverts_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAdverts_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "VehicleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -193,6 +299,11 @@ namespace Identity.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ImageId",
+                table: "AspNetUsers",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -205,15 +316,45 @@ namespace Identity.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserName",
-                table: "AspNetUsers",
-                column: "UserName",
-                unique: true,
-                filter: "[UserName] IS NOT NULL");
+                name: "IX_Photos_AdvertId",
+                table: "Photos",
+                column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_VehicleId",
+                table: "Photos",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAdverts_AdvertId",
+                table: "UserAdverts",
+                column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAdverts_VehicleId",
+                table: "UserAdverts",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_VehicleOwnerId",
+                table: "Vehicles",
+                column: "VehicleOwnerId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Photos_Vehicles_VehicleId",
+                table: "Photos",
+                column: "VehicleId",
+                principalTable: "Vehicles",
+                principalColumn: "VehicleId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Vehicles_AspNetUsers_VehicleOwnerId",
+                table: "Vehicles");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -230,10 +371,22 @@ namespace Identity.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "UserAdverts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
+                name: "Adverts");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
         }
     }
 }

@@ -22,6 +22,7 @@ using Identity.API.Middleware;
 using Identity.Application.User;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Identity.API
 {
@@ -57,7 +58,7 @@ namespace Identity.API
             //services.AddMediatR(typeof(Login.Handler).Assembly)
             // services.AddMediatR(typeof(Register.Handler).Assembly);
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(Register.Handler).Assembly);
-            //services.AddAutoMapper(typeof(List.Handler));
+            services.AddAutoMapper(typeof(Register.Handler));
             services.AddControllers(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -110,12 +111,7 @@ namespace Identity.API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            //    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            //    c.IncludeXmlComments(xmlPath);
-            //});
+  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -141,13 +137,6 @@ namespace Identity.API
                 endpoints.MapControllers();
             });
 
-
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity.API API V1");
-            //    c.RoutePrefix = string.Empty;
-            //});
         }
     }
 }

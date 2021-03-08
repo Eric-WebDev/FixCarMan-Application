@@ -28,8 +28,8 @@ namespace Identity.Domain
         public bool IsUserGarage { get; set; }
         public string AdvertId { get; set; }
         public virtual Photo Image { get; set; }
-        
-        public virtual ICollection<Advert> Adverts { get; set; }
+        public virtual ICollection<Vehicle> Vehicles { get; set; }
+        public virtual ICollection<UserAdvert> UserAdverts { get; set; }
     }
 }
 

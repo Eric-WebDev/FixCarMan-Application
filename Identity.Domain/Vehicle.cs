@@ -6,7 +6,7 @@ namespace Identity.Domain
 {
     public class Vehicle
     {
-        public int VehicleProfileId { get; set; }
+        public Guid VehicleId { get; set; }
         public string RegistrationNumber { get; set; }
         public string Description { get; set; }
         public string RegistrationYear { get; set; }
@@ -23,5 +23,6 @@ namespace Identity.Domain
         public string VehicleServices { get; set; }
         public virtual AppUser VehicleOwner { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<UserAdvert> UserAdverts{ get; set; }
     }
 }

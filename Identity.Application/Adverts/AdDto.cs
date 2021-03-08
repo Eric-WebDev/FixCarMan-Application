@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Identity.Domain
+namespace Identity.Application.Adverts
 {
-    public class Advert
+    public class AdDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string CarModel { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public string City { get; set; }
-        public virtual ICollection<Photo> Photos { get; set; }
-        public virtual ICollection<UserAdvert> UserAdverts { get; set; }
+        public virtual AppUserAdDto Advertiser { get; set; }
     }
+
+  
 }
