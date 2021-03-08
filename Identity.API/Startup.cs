@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,10 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using MediatR;
 using System.Reflection;
 using System.Text;
-using Microsoft.AspNetCore.Server.IISIntegration;
 using Identity.API.Middleware;
 using Identity.Application.User;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
@@ -52,6 +49,7 @@ namespace Identity.API
                         .AllowAnyMethod()
                         .WithExposedHeaders("WWW-Authenticate")
                         .WithOrigins("http://localhost:3000")
+                        //.WithOrigins("https://localhost:5021")
                         .AllowCredentials();
                 });
             });
@@ -93,20 +91,20 @@ namespace Identity.API
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero
                     };
-                    //opt.Events = new JwtBearerEvents
-                    //{
-                    //    OnMessageReceived = context =>
-                    //    {
-                    //        var accessToken = context.Request.Query["access_token"];
-                    //        var path = context.HttpContext.Request.Path;
-                    //        if (!string.IsNullOrEmpty(accessToken))
-                    //        {
-                    //            context.Token = accessToken;
-                    //        }
+                    opt.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken))
+                            {
+                                context.Token = accessToken;
+                            }
 
-                    //        return Task.CompletedTask;
-                    //    }
-                    //};
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
    
             services.AddScoped<IJwtGenerator, JwtGenerator>();

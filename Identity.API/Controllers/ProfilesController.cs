@@ -21,6 +21,7 @@ namespace Identity.API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult<Unit>> Edit(Edit.Command command)
         {
             return await Mediator.Send(command);
