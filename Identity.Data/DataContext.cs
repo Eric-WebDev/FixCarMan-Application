@@ -34,8 +34,8 @@ namespace Identity.Data
                   .HasForeignKey(u => u.AppUserId);
             builder.Entity<UserAdvert>()
                .HasOne(a => a.Advert)
-               .WithMany(u => u.UserAdverts)
-               .HasForeignKey(a => a.AdvertId);
+               .WithOne(u => u.UserAdvert)
+               .HasForeignKey<UserAdvert>(a => a.AdvertId);
             builder.Entity<UserAdvert>()
                .HasOne(a => a.Vehicle)
                .WithMany(u => u.UserAdverts)

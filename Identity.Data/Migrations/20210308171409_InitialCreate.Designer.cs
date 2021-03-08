@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210308165331_InitialCreate")]
+    [Migration("20210308171409_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,7 +192,8 @@ namespace Identity.Data.Migrations
 
                     b.HasKey("AppUserId", "AdvertId", "VehicleId");
 
-                    b.HasIndex("AdvertId");
+                    b.HasIndex("AdvertId")
+                        .IsUnique();
 
                     b.HasIndex("VehicleId");
 
@@ -409,8 +410,8 @@ namespace Identity.Data.Migrations
             modelBuilder.Entity("Identity.Domain.UserAdvert", b =>
                 {
                     b.HasOne("Identity.Domain.Advert", "Advert")
-                        .WithMany("UserAdverts")
-                        .HasForeignKey("AdvertId")
+                        .WithOne("UserAdvert")
+                        .HasForeignKey("Identity.Domain.UserAdvert", "AdvertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

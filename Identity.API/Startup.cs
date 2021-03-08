@@ -23,6 +23,7 @@ using Identity.Application.User;
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Identity.Application.Adverts;
 
 namespace Identity.API
 {
@@ -54,11 +55,8 @@ namespace Identity.API
                         .AllowCredentials();
                 });
             });
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
-            //services.AddMediatR(typeof(Login.Handler).Assembly)
-            // services.AddMediatR(typeof(Register.Handler).Assembly);
-            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(Register.Handler).Assembly);
-            services.AddAutoMapper(typeof(Register.Handler));
+            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(List.Handler));
             services.AddControllers(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();

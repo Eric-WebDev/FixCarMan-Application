@@ -328,7 +328,8 @@ namespace Identity.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserAdverts_AdvertId",
                 table: "UserAdverts",
-                column: "AdvertId");
+                column: "AdvertId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAdverts_VehicleId",

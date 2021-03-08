@@ -12,5 +12,6 @@ namespace Identity.Domain
         public virtual Advert Advert { get; set; }
         public Guid VehicleId { get; set; }
         public virtual Vehicle Vehicle { get; set; }
+        public DateTime DatePublished { get; set; }
     }
 }
