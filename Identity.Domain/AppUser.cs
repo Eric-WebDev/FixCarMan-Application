@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Identity.Domain
 {
@@ -26,7 +27,9 @@ namespace Identity.Domain
         public string ZipCode { get; set; }
         public bool IsUserGarage { get; set; }
         public string AdvertId { get; set; }
-        public string Image { get; set; }
+        public virtual Photo Image { get; set; }
+        
+        public virtual ICollection<Advert> Adverts { get; set; }
     }
 }
 

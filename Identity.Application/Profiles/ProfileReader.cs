@@ -32,8 +32,7 @@ namespace Identity.Application.Profiles
                 ProfileDescription=user.ProfileDescription,
                 Street=user.Street,
                 City=user.City,
-                County=user.County,
-                Image=user.Image
+                County=user.County
       
             };
 

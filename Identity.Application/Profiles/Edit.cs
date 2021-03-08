@@ -71,7 +71,7 @@ namespace Identity.Application.Profiles
                 user.Street = request.Street ?? user.Street;
                 user.City = request.Street ?? user.Street;
                 user.County = request.County ?? user.County;
-                user.Image = request.Image ?? user.Image;
+                //user.Image = request.Image ?? user.Image;
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;

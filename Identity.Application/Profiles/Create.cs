@@ -75,8 +75,8 @@ namespace Identity.Application.Profiles
                     City = request.City,
                    County=request.County,
                    ZipCode=request.ZipCode,
-                   IsUserGarage=request.IsUserGarage,
-                   Image=request.Image
+                   IsUserGarage=request.IsUserGarage
+                   //Image=request.Image
                 };
 
                 _context.AppUsersProfiles.Add(profile);
