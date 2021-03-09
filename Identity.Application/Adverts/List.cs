@@ -19,7 +19,7 @@ namespace Identity.Application.Adverts
         public class AdsEnvelope
         {
             public List<AdDto> Adverts { get; set; }
-            public int AdCount { get; set; }
+            public int AdvertCount { get; set; }
         }
         public class Query : IRequest<AdsEnvelope>
         {
@@ -62,7 +62,7 @@ namespace Identity.Application.Adverts
                 return new AdsEnvelope
                 {
                     Adverts = _mapper.Map<List<Advert>, List<AdDto>>(adverts),
-                    AdCount = queryable.Count()
+                    AdvertCount = queryable.Count()
                 };
             }
         }

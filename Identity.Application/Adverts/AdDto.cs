@@ -6,7 +6,7 @@ namespace Identity.Application.Adverts
 {
     public class AdDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string CarModel { get; set; }
         public string Description { get; set; }
