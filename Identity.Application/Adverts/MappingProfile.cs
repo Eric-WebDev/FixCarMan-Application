@@ -8,11 +8,11 @@ namespace Identity.Application.Adverts
         public MappingProfile()
         {
             CreateMap<Advert, AdDto>();
-            CreateMap<UserAdvert, AppUserAdDto>()
-                .ForMember(d => d.AdvertiserUserName, o => o.MapFrom(s => s.AppUser.UserName))
-                .ForMember(d => d.Email, o => o.MapFrom(s => s.AppUser.Email))
-                .ForMember(d => d.Image, o => o.MapFrom(s => s.AppUser.Image.Url))
-                .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.AppUser.PhoneNumber));
+            CreateMap<UserAdvert, Profiles.UserAdDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.AppUser.AdvertId))
+                .ForMember(d => d.Title, o => o.MapFrom(s => s.Advert.Title))
+                .ForMember(d => d.CarModel, o => o.MapFrom(s => s.Advert.CarModel))
+                .ForMember(d => d.Date, o => o.MapFrom(s => s.DatePublished));
         }
     }
 }

@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,17 +22,18 @@ namespace Identity.Application.Adverts
         }
         public class Query : IRequest<AdsEnvelope>
         {
-            public Query(int? limit, int? offset,  DateTime? startDate)
+            public Query(int? limit, int? offset,  bool isAdvertCreator, DateTime? startDate)
             {
                 Limit = limit;
                 Offset = offset;
+                IsAdvertCreator = isAdvertCreator;
                 StartDate = startDate ?? DateTime.Now;
             }
             public int? Limit { get; set; }
             public int? Offset { get; set; }
+            public bool IsAdvertCreator { get; set; }
             public DateTime? StartDate { get; set; }
         }
-
         public class Handler : IRequestHandler<Query, AdsEnvelope>
         {
             private readonly DataContext _context;
@@ -48,25 +48,31 @@ namespace Identity.Application.Adverts
 
             public async Task<AdsEnvelope> Handle(Query request, CancellationToken cancellationToken)
             {
-                var queryable = _context.Adverts
-                    .Where(x => x.Date >= request.StartDate)
-                    .OrderBy(x => x.Date)
-                    .AsQueryable();
+            var queryable = _context.Adverts
+                .Where(x => x.Date >= request.StartDate)
+                .OrderBy(x => x.Date)
+                .AsQueryable();
 
+            if (!request.IsAdvertCreator)
+            {
                 queryable = queryable.Where(x => x.UserAdverts.Any(a => a.AppUser.UserName == _userAccessor.GetCurrentUsername()));
-               
-                var adverts = await queryable
-                    .Skip(request.Offset ?? 0)
-                    .Take(request.Limit ?? 3).ToListAsync();
-
-                return new AdsEnvelope
-                {
-                    Adverts = _mapper.Map<List<Advert>, List<AdDto>>(adverts),
-                    AdvertCount = queryable.Count()
-                };
             }
+
+            if (request.IsAdvertCreator)
+            {
+                queryable = queryable.Where(x => x.UserAdverts.Any(a => a.AppUser.UserName == _userAccessor.GetCurrentUsername() && a.IsAdvertCreator));
+            }
+
+            var adverts = await queryable
+                .Skip(request.Offset ?? 0)
+                .Take(request.Limit ?? 5).ToListAsync();
+
+            return new AdsEnvelope
+            {
+                Adverts = _mapper.Map<List<Advert>, List<AdDto>>(adverts),
+                AdvertCount = queryable.Count()
+            };
+        }
         }
     }
-
-   
 }

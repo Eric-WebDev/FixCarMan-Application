@@ -27,8 +27,7 @@ namespace Identity.Domain
         public string ZipCode { get; set; }
         public bool IsUserGarage { get; set; }
         public string AdvertId { get; set; }
-        public virtual Photo Image { get; set; }
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
         public virtual ICollection<UserAdvert> UserAdverts { get; set; }
     }
 }

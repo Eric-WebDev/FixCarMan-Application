@@ -65,14 +65,15 @@ namespace Identity.Application.Adverts
                 var user = await _context.Users.SingleOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetCurrentUsername());
 
-                var userAd = new UserAdvert
+                var userAdvertCreator = new UserAdvert
                 {
                     AppUser = user,
                     Advert = advert,
+                    IsAdvertCreator=true,
                     DatePublished = DateTime.Now
                 };
 
-                _context.UserAdverts.Add(userAd);
+                _context.UserAdverts.Add(userAdvertCreator);
 
                 var success = await _context.SaveChangesAsync() > 0;
 

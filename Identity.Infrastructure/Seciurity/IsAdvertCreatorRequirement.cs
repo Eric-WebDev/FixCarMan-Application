@@ -11,36 +11,34 @@ using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Seciurity
 {
-    public class IsGarageRequirement : IAuthorizationRequirement
+    public class IsAdvertCreatorRequirment : IAuthorizationRequirement
     {
     }
 
-    public class IsGarageRequirementHandler : AuthorizationHandler<IsGarageRequirement>
+    public class IsAdvertCreatorRequirementHandler : AuthorizationHandler<IsAdvertCreatorRequirment>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly DataContext _context;
-        public IsGarageRequirementHandler(IHttpContextAccessor httpContextAccessor, DataContext context)
+        public IsAdvertCreatorRequirementHandler(IHttpContextAccessor httpContextAccessor, DataContext context)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsGarageRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsAdvertCreatorRequirment requirement)
         {
             if (context.Resource is AuthorizationFilterContext authContext)
             {
                 var currentUserName = _httpContextAccessor.HttpContext.User?.Claims?.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                var UserProfileId = Guid.Parse(authContext.RouteData.Values["id"].ToString());
+                var advertId = Guid.Parse(authContext.RouteData.Values["id"].ToString());
 
-                var userProfileDetails = _context.AppUsersProfiles.FindAsync(UserProfileId).Result;
-                if (userProfileDetails.IsUserGarage == true)
-                {
-                    var garage = userProfileDetails;
-                    if (garage?.UserName == currentUserName)
-                        context.Succeed(requirement);
-                }
+                var advert = _context.Adverts.FindAsync(advertId).Result;
 
+                var host = advert.UserAdverts.FirstOrDefault(x => x.IsAdvertCreator);
+
+                if (host?.AppUser?.UserName == currentUserName)
+                    context.Succeed(requirement);
             }
             else
             {

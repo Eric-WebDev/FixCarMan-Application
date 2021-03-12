@@ -34,7 +34,7 @@ namespace Identity.Application.Adverts
                     .FindAsync(request.Id);
 
                 if (ad == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Not found" });
+                    throw new RestException(HttpStatusCode.NotFound, new { Advert = "Not found" });
 
                 var activityToReturn = _mapper.Map<Advert, AdDto>(ad);
 

@@ -16,14 +16,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MediatR;
-using System.Reflection;
+
 using System.Text;
 using Identity.API.Middleware;
-using Identity.Application.User;
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Identity.Application.Adverts;
+using Microsoft.OpenApi.Models;
 
 namespace Identity.API
 {
@@ -62,7 +62,7 @@ namespace Identity.API
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<CreateAd>());
 
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -70,12 +70,12 @@ namespace Identity.API
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("IsGarage", policy =>
+                opt.AddPolicy("IsAdvertCreator", policy =>
                 {
-                    policy.Requirements.Add(new IsGarageRequirement());
+                    policy.Requirements.Add(new IsAdvertCreatorRequirment());
                 });
             });
-            services.AddTransient<IAuthorizationHandler, IsGarageRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsAdvertCreatorRequirementHandler>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -109,6 +109,10 @@ namespace Identity.API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FixCarMan", Version = "v1" });
+            });
   
         }
 
@@ -118,14 +122,21 @@ namespace Identity.API
             app.UseMiddleware<ErrorHandlingMiddleware>();
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                // app.UseHsts();
+                app.UseHsts();
             }
             //app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "FixCarMan V1");
+            });
+
+   
             app.UseRouting();
             app.UseAuthentication();
             app.UseCors("CorsPolicy");

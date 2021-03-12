@@ -13,7 +13,7 @@ namespace Identity.Data
         public static async Task SeedData(DataContext context,
            UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any())
+           if (!userManager.Users.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -54,31 +54,48 @@ namespace Identity.Data
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
             }
+           if (!context.Adverts.Any())
+           {
+                var adverts = new List<Advert>
+                {
+                    new Advert
+                    {
+                        Title = "Fix car 1",
+                        Date = DateTime.Now.AddMonths(-2),
+                        Description = "Advert 2 months ago",
+                        CarModel = "BMW",
+                        City = "Sligo",
+                        UserAdverts = new List<UserAdvert>
+                        {
+                            new UserAdvert
+                            {
+                                AppUserId = "a",
+                                DatePublished = DateTime.Now.AddMonths(-2)
+                            }
 
-            //if (!context.AppUsersProfiles.Any())
-            //{
-            //    var profile = new List<UserProfileDetails>
-            //    {
-            //        new UserProfileDetails
-            //        {
-            //            AppUserId = "a",
-            //            FirstName = "Tom",
-            //            LastName = "Got",
-            //            CompanyName = "CarFix",
-            //            ProfileDescription= "the best service",
-            //            URL = "www.CarFix.test",
-            //            Birthday =  null,
-            //            Street =  "39 Avenue",
-            //            City = "Sligo",
-            //            County = "Sligo",
-            //            ZipCode =  "2GRE1",
-            //            IsUserGarage =  true
-            //        },
+                        }
+                    },
+                    new Advert
+                    {
+                        Title = "Fix car 2",
+                        Date = DateTime.Now.AddMonths(-1),
+                        Description = "Advert 1 months ago",
+                        CarModel = "Audi",
+                        City = "Sligo",
+                        UserAdverts = new List<UserAdvert>
+                        {
+                            new UserAdvert
+                            {
+                                AppUserId = "b",
+                                DatePublished = DateTime.Now.AddMonths(-1)
+                            }
 
-            //    };
-            //    await context.AppUsersProfiles.AddRangeAsync(profile);
+                        }
+                    }
+                };
+                await context.Adverts.AddRangeAsync(adverts);
                 await context.SaveChangesAsync();
-            }
+           }
         }
     }
-
+}

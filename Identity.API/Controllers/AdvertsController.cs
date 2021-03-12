@@ -1,11 +1,8 @@
 ﻿using Identity.Application.Adverts;
-using Identity.Application.Profiles;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
@@ -14,10 +11,10 @@ namespace Identity.API.Controllers
     {
         [HttpGet]
         public async Task<ActionResult<List.AdsEnvelope>> List(int? limit,
-          int? offset, DateTime? startDate)
+            int? offset, bool isGoing, bool isHost, DateTime? startDate)
         {
             return await Mediator.Send(new List.Query(limit,
-                offset, startDate));
+                offset, isHost, startDate));
         }
 
         [HttpGet("{id}")]
@@ -34,7 +31,7 @@ namespace Identity.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Policy = "IsAdvertCreator")]
         public async Task<ActionResult<Unit>> Edit(Guid id, EditAd.Command command)
         {
             command.Id = id;
@@ -42,22 +39,10 @@ namespace Identity.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Policy = "IsAdvertCreator")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
             return await Mediator.Send(new DeleteAd.Command { Id = id });
         }
-
-        //[HttpPost("{id}/attend")]
-        //public async Task<ActionResult<Unit>> Attend(Guid id)
-        //{
-        //    return await Mediator.Send(new Attend.Command { Id = id });
-        //}
-
-        //[HttpDelete("{id}/attend")]
-        //public async Task<ActionResult<Unit>> Unattend(Guid id)
-        //{
-        //    return await Mediator.Send(new Unattend.Command { Id = id });
-        //}
     }
 }

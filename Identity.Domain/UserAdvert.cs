@@ -10,8 +10,7 @@ namespace Identity.Domain
         public virtual AppUser AppUser { get; set; }
         public Guid AdvertId { get; set; }
         public virtual Advert Advert { get; set; }
-        public Guid VehicleId { get; set; }
-        public virtual Vehicle Vehicle { get; set; }
         public DateTime DatePublished { get; set; }
+        public bool IsAdvertCreator { get; set; }
     }
 }
