@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210309132424_InitialCreate")]
+    [Migration("20210313091255_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,9 +84,6 @@ namespace Identity.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("IsUserGarage")
                         .HasColumnType("bit");
 
@@ -140,8 +137,6 @@ namespace Identity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -165,6 +160,9 @@ namespace Identity.Data.Migrations
                     b.Property<Guid?>("AdvertId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
 
@@ -174,6 +172,8 @@ namespace Identity.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AdvertId");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Photos");
                 });
@@ -188,6 +188,9 @@ namespace Identity.Data.Migrations
 
                     b.Property<DateTime>("DatePublished")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAdvertCreator")
+                        .HasColumnType("bit");
 
                     b.HasKey("AppUserId", "AdvertId");
 
@@ -327,18 +330,15 @@ namespace Identity.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Identity.Domain.AppUser", b =>
-                {
-                    b.HasOne("Identity.Domain.Photo", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-                });
-
             modelBuilder.Entity("Identity.Domain.Photo", b =>
                 {
                     b.HasOne("Identity.Domain.Advert", null)
                         .WithMany("Photos")
                         .HasForeignKey("AdvertId");
+
+                    b.HasOne("Identity.Domain.AppUser", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Identity.Domain.UserAdvert", b =>

@@ -1,16 +1,15 @@
-﻿using Identity.Application.Adverts;
-using Identity.Application.Errors;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Identity.Application.Profiles;
 using Identity.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Identity.Application.Profiles
+namespace Application.Profiles
 {
     public class ListAds
     {
@@ -19,57 +18,29 @@ namespace Identity.Application.Profiles
             public string Username { get; set; }
             public string Predicate { get; set; }
         }
-
         public class Handler : IRequestHandler<Query, List<UserAdDto>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
             }
-
-            public async Task<List<UserAdDto>> Handle(Query request,
-                CancellationToken cancellationToken)
+            public async Task<List<UserAdDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.Username);
-
-                if (user == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });
-
-                var queryable = user.UserAdverts
-                    .OrderBy(a => a.Advert.Date)
-                    .AsQueryable();
-
-
-                switch (request.Predicate)
+                var query = _context.UserAdverts
+                .Where(u => u.AppUser.UserName == request.Username)
+                .OrderBy(a => a.Advert.Date)
+                .ProjectTo<UserAdDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
+                query = request.Predicate switch
                 {
-                    case "expired":
-                        queryable = queryable.Where(a => a.Advert.Date <= DateTime.Now);
-                        break;
-                    case "created":
-                        queryable = queryable.Where(a => a.IsAdvertCreator);
-                        break;
-                    default:
-                        queryable = queryable.Where(a => a.Advert.Date >= DateTime.Now);
-                        break;
-                } 
-                var adverts = queryable.ToList();
-                var advertsToReturn = new List<UserAdDto>();
-
-                foreach (var advert in adverts)
-                {
-                    var userAdvert= new UserAdDto
-                    {
-                        Id = advert.Advert.Id,
-                        Title = advert.Advert.Title,
-                        CarModel = advert.Advert.CarModel,
-                        Date = advert.Advert.Date
-                    };
-
-                    advertsToReturn.Add(userAdvert);
-                }
-
-                return advertsToReturn;
+                    "expired" => query.Where(a => a.Date <= DateTime.Now),
+                    "created" => query.Where(a => a.AdvertiserUsername == request.Username), _ => query.Where(a => a.Date >= DateTime.Now)
+                };
+                var adverts = await query.ToListAsync();
+                return (adverts);
             }
         }
     }

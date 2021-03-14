@@ -11,10 +11,9 @@ namespace Identity.API.Controllers
     {
         [HttpGet]
         public async Task<ActionResult<List.AdsEnvelope>> List(int? limit,
-            int? offset, bool isGoing, bool isHost, DateTime? startDate)
+            int? offset, bool isAdvertCreator)
         {
-            return await Mediator.Send(new List.Query(limit,
-                offset, isHost, startDate));
+            return await Mediator.Send(new List.Query(limit, offset, isAdvertCreator));
         }
 
         [HttpGet("{id}")]

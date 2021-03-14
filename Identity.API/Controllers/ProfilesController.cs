@@ -1,12 +1,9 @@
-﻿using Identity.Application.Adverts;
+﻿using Application.Profiles;
+using Identity.Application.Adverts;
 using Identity.Application.Profiles;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
@@ -30,6 +27,7 @@ namespace Identity.API.Controllers
         public async Task<ActionResult<List<UserAdDto>>> GetUserAdverts(string username, string predicate)
         {
             return await Mediator.Send(new ListAds.Query { Username = username, Predicate = predicate });
+
         }
 
 

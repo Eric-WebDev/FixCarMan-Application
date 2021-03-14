@@ -38,47 +38,6 @@ namespace Identity.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Photos",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Url = table.Column<string>(nullable: true),
-                    IsMain = table.Column<bool>(nullable: false),
-                    AdvertId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Photos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Photos_Adverts_AdvertId",
-                        column: x => x.AdvertId,
-                        principalTable: "Adverts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -108,18 +67,32 @@ namespace Identity.Data.Migrations
                     County = table.Column<string>(nullable: true),
                     ZipCode = table.Column<string>(nullable: true),
                     IsUserGarage = table.Column<bool>(nullable: false),
-                    AdvertId = table.Column<string>(nullable: true),
-                    ImageId = table.Column<string>(nullable: true)
+                    AdvertId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Photos_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Photos",
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,12 +181,40 @@ namespace Identity.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Url = table.Column<string>(nullable: true),
+                    IsMain = table.Column<bool>(nullable: false),
+                    AdvertId = table.Column<Guid>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Adverts_AdvertId",
+                        column: x => x.AdvertId,
+                        principalTable: "Adverts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Photos_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserAdverts",
                 columns: table => new
                 {
                     AppUserId = table.Column<string>(nullable: false),
                     AdvertId = table.Column<Guid>(nullable: false),
-                    DatePublished = table.Column<DateTime>(nullable: false)
+                    DatePublished = table.Column<DateTime>(nullable: false),
+                    IsAdvertCreator = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,11 +261,6 @@ namespace Identity.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ImageId",
-                table: "AspNetUsers",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -287,6 +283,11 @@ namespace Identity.Data.Migrations
                 name: "IX_Photos_AdvertId",
                 table: "Photos",
                 column: "AdvertId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_AppUserId",
+                table: "Photos",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAdverts_AdvertId",
@@ -312,19 +313,19 @@ namespace Identity.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
                 name: "UserAdverts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Photos");
-
-            migrationBuilder.DropTable(
                 name: "Adverts");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
