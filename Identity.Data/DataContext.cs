@@ -33,8 +33,8 @@ namespace Identity.Data
                   .HasForeignKey(u => u.AppUserId);
             builder.Entity<UserAdvert>()
                .HasOne(a => a.Advert)
-               .WithMany(u => u.UserAdverts)
-               .HasForeignKey(a => a.AdvertId);
+               .WithOne(u => u.UserAdvert);
+               
         }
     }
 }

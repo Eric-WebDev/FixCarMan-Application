@@ -29,15 +29,20 @@ namespace Identity.Infrastructure.Seciurity
         {
             if (context.Resource is AuthorizationFilterContext authContext)
             {
+              
+
                 var currentUserName = _httpContextAccessor.HttpContext.User?.Claims?.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
 
                 var advertId = Guid.Parse(authContext.RouteData.Values["id"].ToString());
 
+                var userAdvert = _context.UserAdverts.FindAsync(advertId).Result;
                 var advert = _context.Adverts.FindAsync(advertId).Result;
 
-                var host = advert.UserAdverts.FirstOrDefault(x => x.IsAdvertCreator);
+               
+                var isAdvertCreator = advert.UserAdvert;
 
-                if (host?.AppUser?.UserName == currentUserName)
+                if (isAdvertCreator?.AppUser?.UserName == currentUserName)
                     context.Succeed(requirement);
             }
             else

@@ -29,6 +29,7 @@ namespace Identity.Domain
         public string AdvertId { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
         public virtual ICollection<UserAdvert> UserAdverts { get; set; }
+       
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Identity.Application.Errors;
+using Identity.Application.Profiles;
 using Identity.Data;
 using Identity.Domain;
 using MediatR;
@@ -36,9 +37,9 @@ namespace Identity.Application.Adverts
                 if (ad == null)
                     throw new RestException(HttpStatusCode.NotFound, new { Advert = "Not found" });
 
-                var activityToReturn = _mapper.Map<Advert, AdDto>(ad);
+                var advertToReturn = _mapper.Map<Advert, AdDto>(ad);
 
-                return activityToReturn;
+                return advertToReturn;
             }
         }
     }

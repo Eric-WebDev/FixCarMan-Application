@@ -1,4 +1,5 @@
 ﻿using Identity.Application.Adverts;
+using Identity.Application.Profiles;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,11 @@ namespace Identity.API.Controllers
     public class AdvertsController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<List.AdsEnvelope>> List(int? limit,
-            int? offset, bool isAdvertCreator)
+        public async Task<ActionResult<List.AdsEnvelope>> List()
         {
-            return await Mediator.Send(new List.Query(limit, offset, isAdvertCreator));
+            return await Mediator.Send(new List.Query());
         }
-
+       
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<AdDto>> Details(Guid id)
@@ -30,7 +30,7 @@ namespace Identity.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "IsAdvertCreator")]
+        //[Authorize(Policy = "IsAdvertCreator")]
         public async Task<ActionResult<Unit>> Edit(Guid id, EditAd.Command command)
         {
             command.Id = id;
@@ -38,7 +38,7 @@ namespace Identity.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "IsAdvertCreator")]
+        //[Authorize(Policy = "IsAdvertCreator")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
             return await Mediator.Send(new DeleteAd.Command { Id = id });

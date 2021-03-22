@@ -60,37 +60,33 @@ namespace Identity.Data
                 {
                     new Advert
                     {
-                        Title = "Fix car 1",
+                        Title = "Fix car 1 / bob",
                         Date = DateTime.Now.AddMonths(-2),
                         Description = "Advert 2 months ago",
                         CarModel = "BMW",
                         City = "Sligo",
-                        UserAdverts = new List<UserAdvert>
+                        UserAdvert = new UserAdvert
                         {
-                            new UserAdvert
-                            {
                                 AppUserId = "a",
-                                DatePublished = DateTime.Now.AddMonths(-2)
-                              
-                            }
+                                DatePublished = DateTime.Now.AddMonths(-2),
+                                IsAdvertCreator=true,                               
 
                         }
                     },
                     new Advert
                     {
-                        Title = "Fix car 2",
+                        Title = "Fix car 2 / jane",
                         Date = DateTime.Now.AddMonths(-1),
                         Description = "Advert 1 months ago",
                         CarModel = "Audi",
                         City = "Sligo",
-                        UserAdverts = new List<UserAdvert>
+                        UserAdvert = new UserAdvert
                         {
-                            new UserAdvert
-                            {
+                           
                                 AppUserId = "b",
-                                DatePublished = DateTime.Now.AddMonths(-1)
-                            }
-
+                                DatePublished = DateTime.Now.AddMonths(-1),
+                                IsAdvertCreator=true
+    
                         }
                     }
                 };

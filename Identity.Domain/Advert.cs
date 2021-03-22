@@ -12,6 +12,6 @@ namespace Identity.Domain
         public DateTime Date { get; set; }
         public string City { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
-        public virtual ICollection<UserAdvert> UserAdverts { get; set; }
+        public virtual UserAdvert UserAdvert { get; set; }
     }
 }

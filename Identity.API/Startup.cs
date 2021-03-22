@@ -16,7 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MediatR;
-
 using System.Text;
 using Identity.API.Middleware;
 using System;
@@ -112,6 +111,7 @@ namespace Identity.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FixCarMan", Version = "v1" });
+                c.CustomSchemaIds(x => x.FullName);
             });
   
         }
