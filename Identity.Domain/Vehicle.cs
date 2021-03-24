@@ -6,7 +6,7 @@ namespace Identity.Domain
 {
     public class Vehicle
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string RegistrationNumber { get; set; }
         public string Description { get; set; }
         public string RegistrationYear { get; set; }

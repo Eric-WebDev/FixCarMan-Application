@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Identity.Application.Vehicles;
 using Identity.Domain;
 
 namespace Identity.Application.Adverts
@@ -17,7 +18,9 @@ namespace Identity.Application.Adverts
                 .ForMember(d => d.Date, o => o.MapFrom(s => s.DatePublished))
                 .ForMember(d => d.AdvertiserUsername, o => o.MapFrom(s => s.AppUser.UserName));
             CreateMap<Advert, AdDto>();
+            CreateMap<Vehicle, VehicleDto>();
                 
+
 
         }
     }

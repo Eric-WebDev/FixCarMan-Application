@@ -4,14 +4,16 @@ using Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Identity.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210323092202_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +54,9 @@ namespace Identity.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("AdvertId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
@@ -164,16 +169,11 @@ namespace Identity.Data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AdvertId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Photos");
                 });
@@ -198,58 +198,6 @@ namespace Identity.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("UserAdverts");
-                });
-
-            modelBuilder.Entity("Identity.Domain.Vehicle", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BodyStyle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CarMake")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CarModel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("EngineSize")
-                        .HasColumnType("float");
-
-                    b.Property<string>("FuelType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NCTResults")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfDoors")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfSeats")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegistrationNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegistrationYear")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Transmission")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleServices")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Vin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -392,10 +340,6 @@ namespace Identity.Data.Migrations
                     b.HasOne("Identity.Domain.AppUser", null)
                         .WithMany("Photos")
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("Identity.Domain.Vehicle", null)
-                        .WithMany("Photos")
-                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("Identity.Domain.UserAdvert", b =>
@@ -409,15 +353,6 @@ namespace Identity.Data.Migrations
                     b.HasOne("Identity.Domain.AppUser", "AppUser")
                         .WithMany("UserAdverts")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Identity.Domain.Vehicle", b =>
-                {
-                    b.HasOne("Identity.Domain.AppUser", "VehicleOwner")
-                        .WithMany("UserVehicles")
-                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

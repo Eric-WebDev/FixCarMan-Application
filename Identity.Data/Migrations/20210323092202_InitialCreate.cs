@@ -292,7 +292,8 @@ namespace Identity.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserAdverts_AdvertId",
                 table: "UserAdverts",
-                column: "AdvertId");
+                column: "AdvertId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

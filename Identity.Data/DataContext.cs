@@ -17,6 +17,7 @@ namespace Identity.Data
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<UserAdvert> UserAdverts { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,7 +35,11 @@ namespace Identity.Data
             builder.Entity<UserAdvert>()
                .HasOne(a => a.Advert)
                .WithOne(u => u.UserAdvert);
-               
+            builder.Entity<Vehicle>()
+                 .HasOne(u => u.VehicleOwner)
+                 .WithMany(a => a.UserVehicles)
+                 .HasForeignKey(u => u.Id);
+
         }
     }
 }

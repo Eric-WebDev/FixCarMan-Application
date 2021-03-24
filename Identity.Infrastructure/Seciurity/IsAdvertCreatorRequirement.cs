@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Seciurity
@@ -30,19 +28,17 @@ namespace Identity.Infrastructure.Seciurity
             if (context.Resource is AuthorizationFilterContext authContext)
             {
               
-
+                // get the auth current user name
                 var currentUserName = _httpContextAccessor.HttpContext.User?.Claims?.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-
+                // get the edited ad id
                 var advertId = Guid.Parse(authContext.RouteData.Values["id"].ToString());
+                var ad = _context.Adverts.FindAsync(advertId).Result;
 
-                var userAdvert = _context.UserAdverts.FindAsync(advertId).Result;
-                var advert = _context.Adverts.FindAsync(advertId).Result;
-
-               
-                var isAdvertCreator = advert.UserAdvert;
-
-                if (isAdvertCreator?.AppUser?.UserName == currentUserName)
+                // find edited ad
+                var advertCreator = ad.UserAdvert;
+                
+                if (advertCreator?.AppUser?.UserName == currentUserName) 
                     context.Succeed(requirement);
             }
             else

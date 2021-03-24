@@ -62,8 +62,7 @@ namespace Identity.Application.Adverts
 
                 _context.Adverts.Add(advert);
 
-                var user = await _context.Users.SingleOrDefaultAsync(x =>
-                    x.UserName == _userAccessor.GetCurrentUsername());
+                var user = await _context.Users.SingleOrDefaultAsync(x =>  x.UserName == _userAccessor.GetCurrentUsername());
 
                 var userAdvertCreator = new UserAdvert
                 {
