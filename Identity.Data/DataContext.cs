@@ -13,7 +13,7 @@ namespace Identity.Data
         {
         }
 
-        //public DbSet<AppUser> AppUsersProfiles { get; set; }
+
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<UserAdvert> UserAdverts { get; set; }
         public DbSet<Photo> Photos { get; set; }

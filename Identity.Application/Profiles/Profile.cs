@@ -6,7 +6,6 @@ namespace Identity.Application.Profiles
 {
     public class Profile
     {
- 
         public string Username { get; set; }
         public string FirstName { get; set; }
 

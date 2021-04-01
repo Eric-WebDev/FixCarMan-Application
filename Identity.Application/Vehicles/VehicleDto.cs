@@ -13,6 +13,14 @@ namespace Identity.Application.Vehicles
         public string RegistrationYear { get; set; }
         public string CarMake { get; set; }
         public string CarModel { get; set; }
+        public string VehicleOwnerUsername { get; set; }
+        public string BodyStyle { get; set; }
+        public string Transmission { get; set; }
+        public string FuelType { get; set; }
+        public int? NumberOfSeats { get; set; }
+        public int NumberOfDoors { get; set; }
+        public double EngineSize { get; set; }
+        public string Vin { get; set; }
 
     }
 }

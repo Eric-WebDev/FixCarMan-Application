@@ -15,12 +15,12 @@ namespace Identity.Application.Adverts
                 .ForMember(d => d.Description, o => o.MapFrom(s => s.Advert.Description))
                 .ForMember(d => d.CarModel, o => o.MapFrom(s => s.Advert.CarModel))
                 .ForMember(d => d.City, o => o.MapFrom(s => s.Advert.City))
-                .ForMember(d => d.Date, o => o.MapFrom(s => s.DatePublished))
+                .ForMember(d => d.Date, o => o.MapFrom(s => s.Advert.Date))
                 .ForMember(d => d.AdvertiserUsername, o => o.MapFrom(s => s.AppUser.UserName));
             CreateMap<Advert, AdDto>();
-            CreateMap<Vehicle, VehicleDto>();
+            CreateMap<Vehicle, VehicleDto>()
+                .ForMember(d => d.VehicleOwnerUsername, o => o.MapFrom(s => s.VehicleOwner.UserName)); ;
                 
-
 
         }
     }

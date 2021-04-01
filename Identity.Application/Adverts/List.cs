@@ -37,19 +37,9 @@ namespace Identity.Application.Adverts
 
             public async Task<AdsEnvelope> Handle(Query request, CancellationToken cancellationToken)
             {
-                //var ads = await _context.Adverts
-                // .ToListAsync();
-
-                //return new AdsEnvelope
-                //{
-                //    Adverts =  (ads),
-                //    AdvertCount = ads.Count()
-                //};
-
-
                 var query = _context.UserAdverts
-              .ProjectTo<UserAdDto>(_mapper.ConfigurationProvider)
-              .AsQueryable();
+                    .ProjectTo<UserAdDto>(_mapper.ConfigurationProvider)
+                    .AsQueryable();
                
                 var adverts = await query.ToListAsync();
                 return new AdsEnvelope
@@ -62,31 +52,3 @@ namespace Identity.Application.Adverts
         }
     }
 }
-
-
-//namespace Identity.Application.Adverts
-//{
-//    public class List
-//    {
-//        public class Query : IRequest<List<UserAdDto>> { }
-
-//        public class Handler : IRequestHandler<Query, List<UserAdDto>>
-//        {
-//            private readonly DataContext _context;
-//            private readonly IMapper _mapper;
-//            public Handler(DataContext context, IMapper mapper)
-//            {
-//                _mapper = mapper;
-//                _context = context;
-//            }
-
-//            public async Task<List<UserAdDto>> Handle(Query request, CancellationToken cancellationToken)
-//            {
-//                var adverts = await _context.UserAdverts
-//                    .ToListAsync();
-
-//                return _mapper.Map<List<UserAdvert>, List<UserAdDto>>(adverts);
-//            }
-//        }
-//    }
-//}

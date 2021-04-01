@@ -109,11 +109,11 @@ namespace Identity.API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FixCarMan", Version = "v1" });
-                c.CustomSchemaIds(x => x.FullName);
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FixCarMan", Version = "v1" });
+            //    c.CustomSchemaIds(x => x.FullName);
+            //});
   
         }
 
@@ -131,11 +131,11 @@ namespace Identity.API
                 app.UseHsts();
             }
             //app.UseHttpsRedirection();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("v1/swagger.json", "FixCarMan V1");
-            });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("v1/swagger.json", "FixCarMan V1");
+            //});
 
    
             app.UseRouting();

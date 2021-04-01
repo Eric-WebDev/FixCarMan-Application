@@ -44,7 +44,6 @@ namespace Identity.Application.Profiles
             public CommandValidator()
             {
                 RuleFor(x => x.Username).NotEmpty();
-             
             }
         }
 
@@ -63,7 +62,6 @@ namespace Identity.Application.Profiles
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
                 //user.UserName = request.Username ?? user.UserName;
-
                 user.FirstName = request.FirstName ?? user.FirstName;
                 user.LastName = request.LastName ?? user.LastName;
                 user.CompanyName = request.CompanyName ?? user.CompanyName;

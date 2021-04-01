@@ -1,6 +1,4 @@
-﻿
-
-using FluentValidation;
+﻿using FluentValidation;
 using Identity.Application.Interfaces;
 using Identity.Data;
 using Identity.Domain;

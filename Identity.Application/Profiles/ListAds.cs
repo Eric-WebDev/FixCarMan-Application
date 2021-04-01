@@ -36,8 +36,10 @@ namespace Application.Profiles
                 .AsQueryable();
                 query = request.Predicate switch
                 {
+                    "active" => query.Where(a => a.Date >= DateTime.Now),
                     "expired" => query.Where(a => a.Date <= DateTime.Now),
-                    "created" => query.Where(a => a.AdvertiserUsername == request.Username), _ => query.Where(a => a.Date >= DateTime.Now)
+                    "all" => query.Where(a => a.AdvertiserUsername == request.Username), 
+                    _ => query.Where(a => a.Date >= DateTime.Now)
                 };
                 var adverts = await query.ToListAsync();
                 return (adverts);
